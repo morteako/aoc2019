@@ -1,0 +1,2 @@
+--test=Main.main
+--setup=":set -fwarn-incomplete-patterns"
