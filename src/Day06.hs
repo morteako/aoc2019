@@ -22,10 +22,12 @@ solveB = undefined
 main :: IO ()
 main = do
     contents <- readFile "data/day06.txt"
-    -- print $ solveA contents
-    -- print $ solveB contents
+    let parsed = parse contents
+
+    -- print $ solveA parsed
+    -- print $ solveB parsed
     
-    print ()
+    return ()
     
     
 
