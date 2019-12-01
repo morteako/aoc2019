@@ -1,31 +1,40 @@
 module Day01 where
 
-import qualified Data.Set as Set
-import Data.Set (Set)
-import qualified Data.Map.Strict as Map.Strict
-import Data.Map.Strict (Map)
-import Control.Lens
+import Data.Function (fix)
 
 
-
-parse :: String -> a
-parse = undefined
-
-
-solveA = undefined
+parse :: String -> [Int]
+parse = fmap read . lines
 
 
-solveB = undefined
+calcMass :: Int -> Int
+calcMass x = div x 3 - 2
+
+calcRecMass :: (Int -> Int) -> Int -> Int
+calcRecMass r x = 
+    let
+        res = calcMass x
+    in
+        if res >= 0 then res + r res else 0
+    
+
+solveA :: [Int] -> Int
+solveA = sum . fmap calcMass
+        
+
+solveB :: [Int] -> Int
+solveB = sum . fmap (fix calcRecMass)
 
 
         
 main :: IO ()
 main = do
     contents <- readFile "data/day1.txt"
-    -- print $ solveA contents
-    -- print $ solveB contents
+    let parsed = parse contents
+
+    print $ solveA parsed
+    print $ solveB parsed
     
-    print ()
     
     
 
