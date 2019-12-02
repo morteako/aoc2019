@@ -1,9 +1,11 @@
+{-# LANGUAGE ViewPatterns #-}
+
 module Day02 where
 
 import           Control.Lens
 import           Data.Array
 import           Data.List.Split                ( splitOn )
-import           Safe
+import           Safe                           (headMay)
 
 
 parse :: String -> (Array Int Int, [Int])
@@ -15,15 +17,13 @@ interpret :: [Int] -> Array Int Int -> Maybe (Array Int Int)
 interpret ops ar =
     case ops of 
         99:_  -> Just ar
-        1:a:b:stored:rest -> interpret rest (doOp (+) a b stored ar) 
-        2:a:b:stored:rest -> interpret rest (doOp (*) a b stored ar)
+        1:a:b:stored:rest -> interpret rest (doOp (+) ar a b stored) 
+        2:a:b:stored:rest -> interpret rest (doOp (*) ar a b stored)
         _  -> Nothing
 
-doOp :: (Int -> Int -> Int) -> Int -> Int -> Int -> Array Int Int -> Array Int Int
-doOp (#) a b stored ar = set (ix stored) (av # bv) ar
-    where
-        av = ar ! a
-        bv = ar ! b
+doOp :: (Int -> Int -> Int) -> Array Int Int -> Int -> Int -> Int -> Array Int Int
+doOp (#) ar ((ar !) -> a) ((ar !) -> b) (ix -> lens)  
+    = set lens (a # b) ar
 
 
 solveA :: Array Int Int -> [Int] -> Maybe Int
