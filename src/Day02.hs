@@ -3,37 +3,40 @@
 module Day02 where
 
 import           Control.Lens
-import           Data.Array
+import           Control.Monad
+import           Data.Vector hiding (length,filter)
 import           Data.List.Split                ( splitOn )
 import           Safe                           (headMay)
 
 
-parse :: String -> (Array Int Int, [Int])
-parse xs = (listArray (0, length res - 1) res, res)
+parse :: String -> (Vector Int, [Int])
+parse xs = (fromList res, res)
   where res = fmap read . splitOn "," $ xs
 
 
-interpret :: [Int] -> Array Int Int -> Maybe (Array Int Int)
+interpret :: [Int] -> Vector Int -> Maybe (Vector Int)
 interpret ops ar =
     case ops of 
         99:_  -> Just ar
-        1:a:b:stored:rest -> interpret rest (doOp (+) ar a b stored) 
-        2:a:b:stored:rest -> interpret rest (doOp (*) ar a b stored)
+        1:a:b:stored:rest -> interpret rest =<< doOp (+) ar a b stored 
+        2:a:b:stored:rest -> interpret rest =<< doOp (*) ar a b stored
         _  -> Nothing
 
-doOp :: (Int -> Int -> Int) -> Array Int Int -> Int -> Int -> Int -> Array Int Int
-doOp (#) ar ((ar !) -> a) ((ar !) -> b) (ix -> lens)  
-    = set lens (a # b) ar
+doOp :: (Int -> Int -> Int) -> Vector Int -> Int -> Int -> Int -> Maybe (Vector Int)
+doOp (#) ar ((ar !?) -> Just a) ((ar !?) -> Just b) (ix -> lens)  
+    = Just $ set lens (a # b) ar
+doOp _ _ _ _ _ = Nothing
 
 
-solveA :: Array Int Int -> [Int] -> Maybe Int
-solveA ar list = fmap (! 0) $ interpret list (ar // [(1,12),(2,2)])
+solveA :: Vector Int -> [Int] -> Maybe Int
+solveA ar list =  interpret list (ar // [(1,12),(2,2)]) >>= (!? 0)
 
 
-solveB :: Array Int Int -> [Int] -> Maybe Int
-solveB ar list = fmap calc $ headMay $ filter (checkTarget . f) ((,) <$> [1..1000] <*> [1..1000])
+solveB :: Vector Int -> [Int] -> Maybe Int
+solveB ar list = fmap calc $ headMay $ filter (checkTarget . f) pairs
     where
-        f (one,two) =  (! 0) <$> interpret list (ar // [(1,one),(2,two)])
+        pairs = (,) <$> [1..100] <*> [1..100]
+        f (one,two) = interpret list (ar // [(1,one),(2,two)]) >>= (!? 0)
         checkTarget x = Just 19690720 == x
         calc (x,y) = 100*x + y
 

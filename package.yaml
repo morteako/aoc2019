@@ -20,7 +20,7 @@ dependencies:
   - multiset
   - split
   - mtl
-  - array
+  - vector
   - bimap
   - safe
 
