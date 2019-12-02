@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 36f82730e85a13be002752f9d5f60791932634dede41d17ebfd0c12df8ff312a
+-- hash: a6098e62393ee716f95d14cc7a47af56456db94191f8ea886046c3152ae68b25
 
 name:           aoc2019
 version:        0.1.0.0
@@ -58,6 +58,7 @@ executable aoc2019
     , lens
     , mtl
     , multiset
+    , safe
     , split
     , time
   default-language: Haskell2010

@@ -1,15 +1,15 @@
-name:                aoc2019
-version:             0.1.0.0
+name: aoc2019
+version: 0.1.0.0
 #synopsis:
 #description:
-homepage:            https://github.com/githubuser/aoc2019#readme
-license:             BSD3
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2019 Author name here
-category:            Web
+homepage: https://github.com/githubuser/aoc2019#readme
+license: BSD3
+author: Author name here
+maintainer: example@example.com
+copyright: 2019 Author name here
+category: Web
 extra-source-files:
-- README.md
+  - README.md
 
 dependencies:
   - base >= 4.7 && < 5
@@ -22,8 +22,9 @@ dependencies:
   - mtl
   - array
   - bimap
+  - safe
 
 executables:
   aoc2019:
-    source-dirs:      src
-    main:             Main.hs
+    source-dirs: src
+    main: Main.hs
