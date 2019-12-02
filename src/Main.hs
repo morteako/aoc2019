@@ -25,51 +25,51 @@ import qualified Day22
 import qualified Day23
 import qualified Day24
 
-import Data.Time.Clock
-import Data.Time.Calendar
-import System.Environment
+import           Data.Time.Clock
+import           Data.Time.Calendar
+import           System.Environment
 
 
 mainFunctions :: [IO ()]
-mainFunctions = [
-    Day01.main,
-    Day02.main,
-    Day03.main,
-    Day04.main,
-    Day05.main,
-    Day06.main,
-    Day07.main,
-    Day08.main,
-    Day09.main,
-    Day10.main,
-    Day11.main,
-    Day12.main,
-    Day13.main,
-    Day14.main,
-    Day15.main,
-    Day16.main,
-    Day17.main,
-    Day18.main,
-    Day19.main,
-    Day20.main,
-    Day21.main,
-    Day22.main,
-    Day23.main,
-    Day24.main
+mainFunctions =
+  [ Day01.main
+  , Day02.main
+  , Day03.main
+  , Day04.main
+  , Day05.main
+  , Day06.main
+  , Day07.main
+  , Day08.main
+  , Day09.main
+  , Day10.main
+  , Day11.main
+  , Day12.main
+  , Day13.main
+  , Day14.main
+  , Day15.main
+  , Day16.main
+  , Day17.main
+  , Day18.main
+  , Day19.main
+  , Day20.main
+  , Day21.main
+  , Day22.main
+  , Day23.main
+  , Day24.main
   ]
 
 headWithDefault :: a -> [a] -> a
-headWithDefault x []    = x
-headWithDefault _ (x:_) = x
+headWithDefault x []      = x
+headWithDefault _ (x : _) = x
 
 main :: IO ()
 main = do
   args <- getArgs
   time <- getCurrentTime
   let (_, _, actualDay) = toGregorian $ utctDay time
-  let day = headWithDefault actualDay $ fmap read args
-  
+  let day               = headWithDefault actualDay $ fmap read args
+
   putStrLn $ "DAY : " ++ show day ++ "\n"
   mainFunctions !! (day - 1)
 
-  
+
