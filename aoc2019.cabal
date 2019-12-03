@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 204448f8eb417f2cdac3bd8436bc2f88de15f97b1d111f5931635a436a9ad999
+-- hash: 4f22332cd64d063e811571cebb26b77169067f27ce4cdf3ce7647785f392601e
 
 name:           aoc2019
 version:        0.1.0.0
@@ -60,5 +60,6 @@ executable aoc2019
     , safe
     , split
     , time
+    , transformers
     , vector
   default-language: Haskell2010
