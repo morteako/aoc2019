@@ -5,7 +5,7 @@ module Day03 where
 
 import qualified Data.Map.Strict as Map
 import Data.Map.Strict (Map)
--- import Control.Lens
+import Data.Function
 import Data.List
 import Data.List.Split
 import Data.Char
@@ -41,15 +41,15 @@ parse = toTuple . map parsePaths . lines
         toTuple [x,y] = (x,y)
         toTuple _ = error "bad input"
 
-        parsePaths = map (read . ("Path " ++) . intercalate " " . groupBy f) . splitOn ","
+        parsePaths = map (read . ("Path " ++) . intercalate " " . groupBy (on (==) isDigit)) . splitOn ","
         
-        f x y = isDigit x && isDigit y || not (isDigit x) && not (isDigit y)
+
 
 
 exec :: Path -> (Coord, Steps) -> Map Coord Steps -> ((Coord, Steps), Map Coord Steps)
 exec (Path dir n) (pos,steps) grid = (last newSteps, Map.unionWith min grid newMap)
     where
-        newMap = Map.fromList newSteps
+        newMap   = Map.fromList newSteps
         newSteps = take (n+1) $ iterate (<> (getDir dir, Sum 1)) (pos, steps)
 
 createMap :: [Path] -> Map Coord Steps
