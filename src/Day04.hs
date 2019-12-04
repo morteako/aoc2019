@@ -1,33 +1,33 @@
 module Day04 where
 
-import qualified Data.Set as Set
-import Data.Set (Set)
-import qualified Data.Map.Strict as Map.Strict
-import Data.Map.Strict (Map)
-import Control.Lens
+
+import           Data.List
 
 
+twoSame :: (Int -> Int -> Bool) -> String -> Bool
+twoSame op = any (op 2 . length) . group
 
-parse :: String -> a
-parse = undefined
+isSorted :: String -> Bool
+isSorted = all (uncurry (<=)) . (zip <*> tail)
+
+rangeMin, rangeMax :: Int
+rangeMin = 156218
+rangeMax = 652527
+
+solve :: (Int -> Int -> Bool) -> Int
+solve op =
+  length
+    . filter ((&&) <$> twoSame op <*> isSorted)
+    . map show
+    $ [rangeMin .. rangeMax]
+
+solveA, solveB :: Int
+solveA = solve (>=)
+solveB = solve (==)
 
 
-solveA = undefined
-
-
-solveB = undefined
-
-
-        
 main :: IO ()
 main = do
-    contents <- readFile "data/day04.txt"
-    let parsed = parse contents
-
-    -- print $ solveA parsed
-    -- print $ solveB parsed
-    
-    return ()
-    
-    
+  print $ solveA
+  print $ solveB
 
