@@ -70,6 +70,7 @@ main = do
   let day               = headWithDefault actualDay $ fmap read args
 
   putStrLn $ "DAY : " ++ show day ++ "\n"
-  mainFunctions !! (day - 1)
+  -- mainFunctions !! (day - 1)
+  mainFunctions !! (5 - 1)
 
 

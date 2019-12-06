@@ -23,6 +23,8 @@ dependencies:
   - vector
   - bimap
   - safe
+  - transformers
+  - strings
 
 executables:
   aoc2019:
