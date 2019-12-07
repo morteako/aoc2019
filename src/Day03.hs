@@ -12,6 +12,7 @@ import Data.Char
 import Text.Read
 import Data.Monoid
 import Data.Ord
+import Control.Lens
 
 
 newtype Coord = Coord (Int,Int)
@@ -66,11 +67,11 @@ manDist (Coord (p1,p2)) = abs p1 + abs p2
 calcIntersections :: Paths -> Map Coord Steps
 calcIntersections = Map.delete (Coord (0,0)) . findIntersection
 
-solveA :: Paths -> Int
-solveA = manDist . minimumBy (comparing manDist) . Map.keys . calcIntersections
+solveA :: Paths -> Maybe Int
+solveA = minimumOf (to calcIntersections . itraversed . asIndex. to manDist) 
 
-solveB :: Paths -> Int
-solveB = getSum . minimum . calcIntersections
+solveB :: Paths -> Maybe Int
+solveB = minimumOf (to calcIntersections . traversed . to getSum)
 
 
         
