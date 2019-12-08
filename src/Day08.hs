@@ -47,7 +47,7 @@ instance Monoid Pixel where mempty = Transparent
 
 solveB :: (Int,Int) -> [[Pixel]] -> [[Pixel]]
 solveB (wide,tall) = chunksOf wide . fmap mconcat . transpose
-
+--solveB (wide,tall) = chucnksOf wide . getAp . getZipList . foldMap (Ap . ZipList)
         
 main :: IO ()
 main = do
